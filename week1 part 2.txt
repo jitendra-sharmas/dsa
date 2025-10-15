@@ -1,0 +1,35 @@
+#include<studio.h>
+int main() {
+ int n, i, j, maxIndex, temp;
+ printf("Enter number of elements: ");
+ scanf("%d", &n);
+ int arr[n];
+ printf("Enter %d elements:\n", n);
+ for(i = 0; i < n; i++) {
+ scanf("%d", &arr[i]);
+ }
+ printf("Original Array: ");
+ for(i = 0; i < n; i++) {
+ printf("%d ", arr[i]);
+ }
+ printf("\n");
+ // Selection Sort logic (Descendin)
+for(i = 0; i < n-1; i++) {
+ maxIndex = i;
+ for(j = i+1; j < n; j++) {
+ if(arr[j] > arr[maxIndex]) {
+ maxIndex = j;
+ }
+ }
+ // swap arr[i] and arr[maxIndex]
+ temp = arr[i];
+ arr[i] = arr[maxIndex];
+ arr[maxIndex] = temp;
+ }
+ printf("Sorted Array (Descending): ");
+ for(i = 0; i < n; i++) {
+ printf("%d ", arr[i]);
+ }
+ printf("\n");
+ return 0;
+}
