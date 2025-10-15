@@ -1,0 +1,70 @@
+Part (A) – Declare Calendar
+Description: Declare a calendar as an array of 7 elements (dynamically created array). Each element has Day Name, Date, and Activity fields.
+Code (Part A)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Day {
+    char *name;
+    int date;
+    char *activity;
+};
+
+struct Day* create(int n);
+Part (B) – Functions to Create, Read, and Display
+Description: Functions create(), read(), display() handle creation, input, and printing of calendar.
+Code (Part B)
+struct Day* create(int n) {
+    struct Day *week = (struct Day*)malloc(n * sizeof(struct Day));
+    if(week == NULL) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+    return week;
+}
+
+void read(struct Day *week, int n) {
+    char buffer[100];
+    for(int i = 0; i < n; i++) {
+        printf("\nEnter details for Day %d:\n", i+1);
+
+        printf("Enter Day Name: ");
+        scanf("%s", buffer);
+        week[i].name = (char*)malloc(strlen(buffer)+1);
+        strcpy(week[i].name, buffer);
+
+        printf("Enter Date: ");
+        scanf("%d", &week[i].date);
+
+        printf("Enter Activity: ");
+        scanf(" %[^
+]s", buffer);
+        week[i].activity = (char*)malloc(strlen(buffer)+1);
+        strcpy(week[i].activity, buffer);
+    }
+}
+
+void display(struct Day *week, int n) {
+    printf("\n===== Weekly Activity Report =====\n");
+    for(int i = 0; i < n; i++) {
+        printf("\nDay: %s\n", week[i].name);
+        printf("Date: %d\n", week[i].date);
+        printf("Activity: %s\n", week[i].activity);
+    }
+}
+
+int main() {
+    int n = 7;
+    struct Day *week = create(n);
+    read(week, n);
+    display(week, n);
+
+    for(int i = 0; i < n; i++) {
+        free(week[i].name);
+        free(week[i].activity);
+    }
+    free(week);
+
+    return 0;
+}
