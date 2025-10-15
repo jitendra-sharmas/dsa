@@ -1,0 +1,66 @@
+Part (A) – Reading Strings
+Description: Read the main string (STR), pattern string (PAT) and replacement string (REP) from the user.
+Code (Part A)
+#include <stdio.h>
+
+void readString(char str[], char name[]) {
+    printf("Enter %s: ", name);
+    scanf(" %[^
+]s", str);
+}
+Part (B) – Pattern Matching and Replace
+Description: patternMatch() checks if pattern exists; replacePattern() replaces all occurrences manually.
+Code (Part B)
+int isPatternAtPosition(char str[], char pat[], int pos) {
+    int i = 0;
+    while(pat[i] != '\0') {
+        if(str[pos + i] != pat[i])
+            return 0;
+        i++;
+    }
+    return 1;
+}
+
+void replacePattern(char str[], char pat[], char rep[]) {
+    char temp[1000];
+    int i = 0, j = 0, k;
+    while(str[i] != '\0') {
+        if(isPatternAtPosition(str, pat, i)) {
+            k = 0;
+            while(rep[k] != '\0') temp[j++] = rep[k++];
+            int patLen = 0;
+            while(pat[patLen] != '\0') patLen++;
+            i += patLen;
+        } else {
+            temp[j++] = str[i++];
+        }
+    }
+    temp[j] = '\0';
+    i = 0;
+    while(temp[i] != '\0') { str[i] = temp[i]; i++; }
+    str[i] = '\0';
+}
+
+int patternExists(char str[], char pat[]) {
+    int i = 0, patLen = 0;
+    while(pat[patLen] != '\0') patLen++;
+    while(str[i] != '\0') {
+        if(isPatternAtPosition(str, pat, i)) return 1;
+        i++;
+    }
+    return 0;
+}
+
+int main() {
+    char str[500], pat[100], rep[100];
+    readString(str, "Main String");
+    readString(pat, "Pattern String");
+    readString(rep, "Replacement String");
+    if(patternExists(str, pat)) {
+        replacePattern(str, pat, rep);
+        printf("\nUpdated String: %s\n", str);
+    } else {
+        printf("\nPattern not found in the main string.\n");
+    }
+    return 0;
+}
