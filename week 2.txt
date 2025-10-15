@@ -1,0 +1,63 @@
+PROGRAM 1: Sum of n Natural Numbers
+#include <stdio.h>
+
+int sum(int n) {
+    if(n==0) return 0;
+    return n + sum(n-1);
+}
+
+int main() {
+    int n;
+    printf("Enter n: ");
+    scanf("%d",&n);
+    printf("Sum = %d\n", sum(n));
+    return 0;
+}
+Output 1
+Enter n: 4
+Sum = 10
+PROGRAM 2: Fibonacci Sequence
+#include <stdio.h>
+
+int fib(int n) {
+    if(n==0) return 0;
+    if(n==1) return 1;
+    return fib(n-1) + fib(n-2);
+}
+
+int main() {
+    int n,i;
+    printf("Enter terms: ");
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+        printf("%d ", fib(i));
+    return 0;
+}
+Output 2
+Enter terms: 5
+0 1 1 2 3
+PROGRAM 3: Towers of Hanoi
+#include <stdio.h>
+
+void hanoi(int n, char from, char via, char to) {
+    if(n==1) {
+        printf("Move disk 1 from %c to %c\n", from, to);
+        return;
+    }
+    hanoi(n-1, from, to, via);
+    printf("Move disk %d from %c to %c\n", n, from, to);
+    hanoi(n-1, via, from, to);
+}
+
+int main() {
+    int n;
+    printf("Enter disks: ");
+    scanf("%d",&n);
+    hanoi(n,'A','B','C');
+    return 0;
+}
+Output 3
+Enter disks: 2
+Move disk 1 from A to B
+Move disk 2 from A to C
+Move disk 1 from B to C
