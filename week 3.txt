@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *head = NULL;
+
+void insert(int x) {
+    struct node *n = malloc(sizeof(struct node));
+    n->data = x;
+    if(!head) {
+        head = n;
+        n->next = head;
+    } else {
+        struct node *t = head;
+        while(t->next != head) t = t->next;
+        t->next = n;
+        n->next = head;
+    }
+}
+
+void display() {
+    if(!head) { printf("Empty\n"); return; }
+    struct node *t = head;
+    do {
+        printf("%d ", t->data);
+        t = t->next;
+    } while(t != head);
+    printf("\n");
+}
+
+void delBeg() {
+    if(!head) { printf("Empty\n"); return; }
+    struct node *t = head, *last = head;
+    while(last->next != head) last = last->next;
+    printf("Deleted %d\n", head->data);
+    if(head->next == head) { free(head); head=NULL; }
+    else {
+        head = head->next;
+        last->next = head;
+        free(t);
+    }
+}
+
+void delEnd() {
+    if(!head) { printf("Empty\n"); return; }
+    struct node *t = head, *p=NULL;
+    while(t->next != head) { p=t; t=t->next; }
+    printf("Deleted %d\n", t->data);
+    if(!p) { free(head); head=NULL; }
+    else { p->next = head; free(t); }
+}
+
+void delVal(int x) {
+    if(!head) { printf("Empty\n"); return; }
+    if(head->data == x) { delBeg(); return; }
+    struct node *t=head, *p;
+    do {
+        p=t; t=t->next;
+        if(t->data==x) {
+            printf("Deleted %d\n", t->data);
+            p->next=t->next; free(t); return;
+        }
+    } while(t!=head);
+    printf("%d not found\n", x);
+}
+
+int main() {
+    insert(10); insert(20); insert(30);
+    display();
+    delBeg(); display();
+    delEnd(); display();
+    delVal(20); display();
+    return 0;
+}
